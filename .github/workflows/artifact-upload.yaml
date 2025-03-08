@@ -1,0 +1,12 @@
+on: push
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          touch file1.txt
+          touch file2.txt
+      - uses: actions/upload-artifact@latest
+        with:
+          path: file*
