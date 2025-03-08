@@ -34,6 +34,7 @@ jobs:
               const {id, size} = await artifact.uploadArtifact(
                 `${f}`,
                 [ `./snapshot/${f}/*` ],
+                `./snapshot/${f}`,
                 { retentionDays: 30 }
               )
             }
