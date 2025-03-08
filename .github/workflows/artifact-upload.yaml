@@ -19,8 +19,9 @@ jobs:
         with:
           script: |
             const { readdirSync } = require('fs')
-            const artifact = require('@actions/artifact')
-
+            const { DefaultArtifactClient } = require('@actions/artifact')
+            const artifact = new DefaultArtifactClient()
+            
             const getDirectories = source =>
               readdirSync(source, { withFileTypes: true })
                 .filter(dirent => dirent.isDirectory())
