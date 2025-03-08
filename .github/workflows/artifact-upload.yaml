@@ -31,9 +31,8 @@ jobs:
 
             for (const f of allDirs) {
               const {id, size} = await artifact.uploadArtifact(
-                // name of the artifact
-                f,
-                ['./snapshot/'+f+'/*'],
+                `${f}`,
+                [ `./snapshot/${f}/*` ],
                 { retentionDays: 30 }
               )
             }
