@@ -9,11 +9,8 @@ jobs:
           mkdir -p snapshot/something-2
           touch snapshot/something-1/file1.txt
           touch snapshot/something-2/file2.txt
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     path: file*
 
-      - run: npm install @actions/artifact
+      - run: npm install @actions/artifact@2.2.2
 
       - uses: actions/github-script@v7
         with:
@@ -29,7 +26,11 @@ jobs:
 
             const allDirs = getDirectories("snapshot")
 
+            console.log("allDirs:", allDirs)
+
             for (const f of allDirs) {
+              console.log("f:", f)
+
               const {id, size} = await artifact.uploadArtifact(
                 `${f}`,
                 [ `./snapshot/${f}/*` ],
