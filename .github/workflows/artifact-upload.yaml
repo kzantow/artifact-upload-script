@@ -18,23 +18,13 @@ jobs:
             const { readdirSync } = require('fs')
             const { DefaultArtifactClient } = require('@actions/artifact')
             const artifact = new DefaultArtifactClient()
-            
-            const getDirectories = source =>
-              readdirSync(source, { withFileTypes: true })
-                .filter(dirent => dirent.isDirectory())
-                .map(dirent => dirent.name)
+            const ls = d => readdirSync(d, { withFileTypes: true })
 
-            const allDirs = getDirectories("snapshot")
-
-            console.log("allDirs:", allDirs)
-
-            for (const f of allDirs) {
-              console.log("f:", f)
-
+            for (const dir of ls("snapshot").filter(f => f.isDirectory()).map(f => f.name)) {
               const {id, size} = await artifact.uploadArtifact(
-                `${f}`,
-                [ `./snapshot/${f}/*` ],
-                `./snapshot/${f}`,
+                `${dir}`,
+                ls(`./snapshot/${dir}`).map(f => `./snapshot/${dir}/${f.name}`),
+                `./snapshot/${dir}`,
                 { retentionDays: 30 }
               )
             }
